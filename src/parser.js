@@ -1,6 +1,7 @@
 import { Parser } from 'htmlparser2'
-
+import { renderToHtml } from './render'
 export default class HtmlParser {
+
     constructor(html){
         let self = this
         let elements = []
@@ -37,7 +38,6 @@ export default class HtmlParser {
         parser.done()
 
         this.elements = elements
-        console.log(elements)
     }
 
     static get VNodePrototype(){
@@ -82,15 +82,71 @@ export default class HtmlParser {
         nodeObj.id = attrs.id
         nodeObj.class = attrs.class ? attrs.class.split(' ') : []
         nodeObj.attrs = attrs
-
         return nodeObj
+    }
+    getRootElement(){
+        return this.elements.filter((item) => !item.parent )
     }
     getElements(){
         return this.elements
     }
-    getElementById(){
-        
+    getElementById(id){
+        let elements = this.getElements().filter((item) => item.id === id)
+        if(elements.length){
+            return elements[0]
+        }
+        return null
+    }
+    getElmentsByTagName(tagName){
+        return this.getElements().filter((item) => item.name === tagName )
+    }
+    getElementsByClassName(className){
+        return this.getElements().filter((item) => item.class.indexOf(className) > -1 )
+    }
+    getElementsByAttributes(attrName, attrValue){
+        return this.getElements().filter((item) => item.attrs[attrName] && item.attrs[attrName] === attrValue)
+    }
+    querySelectorAll(selector){
+        let type = selector.substring(0,1)
+        let typeValue = selector.substring(1) 
+        switch(type){
+            case '#':
+                return this.getElements().filter(item => item.id === typeValue)
+                break
+            case '.':
+                return this.getElementsByClassName(typeValue)
+                break
+            case '[':
+                let formatte = typeValue.substring(0, typeValue.length - 1)
+                let [attrName, attrValue] = formatte.split('=')
+                return this.getElementsByAttributes(attrName, attrValue)
+                break
+            default:
+                return this.getElmentsByTagName(selector)
+        }
+    }
+    querySelector(selector){
+        let result = this.querySelectorAll(selector)
+        if(result){
+            return result[0]
+        }
     }
 }
 
-new HtmlParser('<p id="test" style="width:100px;">aaaaaa</p>')
+let parser = new HtmlParser(`<div>
+                        <a data-id="11" href="#"></a>
+                        <img src="http://m.test.com" alt="ceshi"/>
+                        <p id="test" class="test1" style="width:100px;">aaaaaa</p>
+                        <p id="a" class="test1" style="width:100px;">aaaaaa</p>
+                    </div>`)
+console.log(parser.elements)
+console.log(parser.getElementById('test'))
+console.log(parser.getElementsByClassName('test1'))
+console.log(parser.getElmentsByTagName('a'))
+console.log(parser.getElementsByAttributes('data-id', '11'))
+console.log(parser.getRootElement())
+console.log(parser.querySelector('#test'))
+console.log(parser.querySelectorAll('a'))
+// render json into html
+let html = renderToHtml(parser.elements)
+document.querySelector('body').innerHTML = html
