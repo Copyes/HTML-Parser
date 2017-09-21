@@ -5,9 +5,11 @@ This is the first step that writing a htmlstring-parser to learn MVVM.
 
 ### Content
 
--   [ ] 1、Learning htmlparser2
--   [ ] 2、Writing element selector 
--   [ ] 3、Render json into html
+-   [x] 1、Learning htmlparser2
+-   [x] 2、Writing element selector 
+-   [x] 3、Render json into html
+-   [x] 4、Generate the real dom
+-   [ ] 5、The diff
 
 ### Usage
 
