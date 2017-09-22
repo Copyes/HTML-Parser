@@ -1,5 +1,7 @@
 import { Parser } from 'htmlparser2'
 import { renderToHtml } from './render'
+import { diff } from './diff'
+
 export default class HtmlParser {
 
     constructor(html){
@@ -134,19 +136,23 @@ export default class HtmlParser {
 }
 
 let parser = new HtmlParser(`<div>
-                        <a data-id="11" href="#"></a>
-                        <img src="http://m.test.com" alt="ceshi"/>
-                        <p id="test" class="test1" style="width:100px;">aaaaaa</p>
-                        <p id="a" class="test1" style="width:100px;">aaaaaa</p>
-                    </div>`)
-console.log(parser.elements)
-console.log(parser.getElementById('test'))
-console.log(parser.getElementsByClassName('test1'))
-console.log(parser.getElmentsByTagName('a'))
-console.log(parser.getElementsByAttributes('data-id', '11'))
-console.log(parser.getRootElement())
-console.log(parser.querySelector('#test'))
-console.log(parser.querySelectorAll('a'))
+<p id="test" class="test1" style="width:100px;">aaaaaa</p>
+<p id="a" class="test1" style="width:100px;">aaaaaa</p>
+</div>`)
+let parser2 = new HtmlParser(`<div>
+<p id="a" class="test1" style="width:100px;">aaaaaa</p>
+<p id="test" class="test1" style="width:100px;">aaaaaa</p>
+</div>`)
+// console.log(parser.elements)
+// console.log(parser2.elements)
+console.log(diff(parser.elements, parser2.elements))
+// console.log(parser.getElementById('test'))
+// console.log(parser.getElementsByClassName('test1'))
+// console.log(parser.getElmentsByTagName('a'))
+// console.log(parser.getElementsByAttributes('data-id', '11'))
+// console.log(parser.getRootElement())
+// console.log(parser.querySelector('#test'))
+// console.log(parser.querySelectorAll('a'))
 // render json into html
-let html = renderToHtml(parser.elements)
-document.querySelector('body').innerHTML = html
+// let html = renderToHtml(parser.elements)
+// document.querySelector('body').innerHTML = html

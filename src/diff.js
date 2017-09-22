@@ -43,7 +43,7 @@ const findIdentifierPos = (id, restIdentifier, curIndex) => {
 const compareAttrs = (oldNode, newNode) => {
     let patches = []
     let oldAttrs = oldNode.attrs
-    let newAttrs = newNodes.attrs
+    let newAttrs = newNode.attrs
     let keys = Object.keys(newAttrs)
     if(keys.length){
         keys.forEach(key => {
@@ -60,6 +60,8 @@ const compareAttrs = (oldNode, newNode) => {
     return patches
 }
 const diffSameNode = (oldNode, newNode) => {
+    console.log(oldNode)
+    console.log(newNode)
     let patches = []
     // compare the text
     if(oldNode.text !== newNode.text){
@@ -87,7 +89,8 @@ const diffSameNode = (oldNode, newNode) => {
 export const diff = (oldNodes, newNodes, parentNode = null) => {
     let oldIdentifiers = oldNodes.map(vnode => identify(vnode))
     let newIdentifiers = newNodes.map(vnode => identify(vnode))
-
+    // console.log(oldIdentifiers)
+    // console.log(newIdentifiers)
     let patches = []
 
     let restIdentifier = []
@@ -115,13 +118,48 @@ export const diff = (oldNodes, newNodes, parentNode = null) => {
             return 
         }
 
+        // the target node
+        let targetIdentifier = restIdentifier[i]
+        let targetNode = restNode[i]
+
         curIndex = i
         let findPos = findIdentifierPos(id, restIdentifier, curIndex)
         // identfiers are the same, it means oldNode is the same as newNode
-        if(id === restIdentifier[i]){
-            patches = patches.concat(diffSameNode(restNode[i],newNode))
+        if(id === targetIdentifier){
+            patches = patches.concat(diffSameNode(targetNode, newNode))
         } else if(findPos !== -1) {
-            
+            let oldNode = oldNodes[findPos]
+            let oldIdentifier = oldIdentifiers[findPos]
+            patches.push(makePatch('move', targetNode, oldNode))
+
+            restNode.splice(findPos, 1)
+            restNode.splice(i, 0, oldNode)
+            restIdentifier.splice(findPos, 1)
+            restIdentifier.splice(i, 0, oldIdentifier)
+
+        } else if(i < restIdentifier.length){
+            // not exist insert
+            patches.push(makePatch('insert', targetNode, newNode))
+            restNode.splice(i, 0, newNode)
+            restIdentifier.splice(i, 0, id)
+        } else {
+            // not exist ,append
+            patches.push(makePatch('append', parentNode, newNode))
+            restNode.push(newNode)
+            restIdentifier.push(id)
         }
     })
+
+    // when newNodes dealed, delete oldNodes those no use
+    for(let i = curIndex; i < restNode.length; ++i){
+        let oldNode = restNode[i]
+        patches.push(makePatch('remove', oldNode))
+    }
+    restNode.splice(curIndex + 1, restNode.length - curIndex)
+
+    // update vnodes
+    oldNodes.splice(0, oldNodes.length)
+    restNode.forEach(item => oldNodes.push(item))
+
+    return patches
 }
