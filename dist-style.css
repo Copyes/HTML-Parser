@@ -1,0 +1,72 @@
+.content {
+    position: absolute;
+    width: 750*100vw/750;
+    height: 970*100vw/750;
+}
+.product {
+    position: absolute;
+    top: 8*100vw/750;
+    left: 5*100vw/750;
+}
+.product-img {
+    width: 740*100vw/750;
+}
+.box {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.box-img {
+    width: 750*100vw/750;
+    height: 970*100vw/750;
+}
+.container {
+    position: absolute;
+    top: 600*100vw/750;
+    left: 10*100vw/750;
+    width: 740*100vw/750;
+    height: 400*100vw/750;
+}
+.info {
+    position: absolute;
+    left: 15*100vw/750;
+    top: 10*100vw/750;
+    width: 450*100vw/750;
+    height: 300*100vw/750;
+}
+.avatar {
+    position: absolute;
+    top: 50*100vw/750;
+    left: 15*100vw/750;
+    width: 450*100vw/750;
+}
+.avatar-img {
+    width: 50*100vw/750;
+    height: 50*100vw/750;
+    border-radius: 25*100vw/750;
+}
+.nick {
+    position: absolute;
+    left: 60*100vw/750;
+    top: 5*100vw/750;
+    font-size: 30*100vw/750;
+}
+.info-desc {
+    font-size: 30*100vw/750;
+    color: #ff4965;
+}
+.qcode {
+    position: absolute;
+    top: 40*100vw/750;
+    right: 15*100vw/750;
+}
+.qcode-desc {
+    position: absolute;
+    right: 15*100vw/750;
+    top: 0;
+    font-size: 30*100vw/750;
+}
+.qcode-img {
+    width: 240*100vw/750;
+    height: 240*100vw/750;
+}

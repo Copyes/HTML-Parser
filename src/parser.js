@@ -135,17 +135,22 @@ export default class HtmlParser {
     }
 }
 
-let parser = new HtmlParser(`<div>
-<p id="test" class="test1" style="width:100px;">aaaaaa</p>
-<p id="a" class="test1" style="width:100px;">aaaaaa</p>
-</div>`)
-let parser2 = new HtmlParser(`<div>
-<p id="a" class="test1" style="width:100px;">aaaaaa</p>
-<p id="test" class="test1" style="width:100px;">aaaaaa</p>
-</div>`)
+
+let htmlStr = document.getElementsByTagName('body')[0].innerHTML.replace(/<\/?script[^>]*>/gi,"")
+let parser = new HtmlParser(htmlStr)
+console.log(parser.elements)
+// let parser = new HtmlParser(`<div>
+// <p id="test" class="test1" style="width:100px;">aaaaaa</p>
+// <p id="a" class="test1" style="width:100px;">aaaaaa</p>
+// </div><div>2222</div>`)
+// let parser2 = new HtmlParser(`<div>
+// <p id="a" class="test1" style="width:100px;">aaaaaa</p>
+// <p id="test"  style="width:100px;">aaaaaa</p>
+// <a>333</a>
+// </div>`)
 // console.log(parser.elements)
 // console.log(parser2.elements)
-console.log(diff(parser.elements, parser2.elements))
+//console.log(diff(parser.elements, parser2.elements))
 // console.log(parser.getElementById('test'))
 // console.log(parser.getElementsByClassName('test1'))
 // console.log(parser.getElmentsByTagName('a'))
@@ -154,5 +159,6 @@ console.log(diff(parser.elements, parser2.elements))
 // console.log(parser.querySelector('#test'))
 // console.log(parser.querySelectorAll('a'))
 // render json into html
-// let html = renderToHtml(parser.elements)
-// document.querySelector('body').innerHTML = html
+let html = renderToHtml(parser.elements[0])
+console.log(html)
+document.querySelector('body').innerHTML = html

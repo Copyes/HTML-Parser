@@ -35,6 +35,7 @@
     "express": "^4.15.4",
     "html-webpack-plugin": "^2.30.1",
     "htmlparser2": "^3.9.2",
+    "postcss": "^6.0.13",
     "webpack": "^3.5.5",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-merge": "^4.1.0",

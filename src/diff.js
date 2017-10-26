@@ -59,9 +59,8 @@ const compareAttrs = (oldNode, newNode) => {
     }
     return patches
 }
+// diff same level node , find out what has changed
 const diffSameNode = (oldNode, newNode) => {
-    console.log(oldNode)
-    console.log(newNode)
     let patches = []
     // compare the text
     if(oldNode.text !== newNode.text){
@@ -72,11 +71,11 @@ const diffSameNode = (oldNode, newNode) => {
     if(attrsPatches.length){
         patches.push(makePatch('changeAttr', oldNode, attrsPatches))
     }
+    // todo：／／
+    // let oldChildren = oldNode.children
+    // let newChildren = newNode.children
 
-    let oldChildren = oldNode.children
-    let newChildren = newNode.children
-
-    patches = patches.concat(diff(oldChildren, newChildren, oldNode))
+    // patches = patches.concat(diff(oldChildren, newChildren, oldNode))
     
     return patches
 }
@@ -92,10 +91,10 @@ export const diff = (oldNodes, newNodes, parentNode = null) => {
     // console.log(oldIdentifiers)
     // console.log(newIdentifiers)
     let patches = []
-
+    // the simpulate array
     let restIdentifier = []
     let restNode = []
-
+    // the first step, find out those deleted oldNode
     oldIdentifiers.forEach((id, i) => {
         let oldNode = oldNodes[i]
         // if the newIdentifiers not contains the oldIdentifier,
@@ -109,7 +108,6 @@ export const diff = (oldNodes, newNodes, parentNode = null) => {
     })
 
     let curIndex = 0
-
     newIdentifiers.forEach((id, i) => {
         let newNode = newNodes[i]
         // all nodes are new, append the new node into parentNode
@@ -117,8 +115,7 @@ export const diff = (oldNodes, newNodes, parentNode = null) => {
             patches.push(makePatch('append', parentNode, newNode))
             return 
         }
-
-        // the target node
+        // the target node and id
         let targetIdentifier = restIdentifier[i]
         let targetNode = restNode[i]
 
@@ -149,9 +146,8 @@ export const diff = (oldNodes, newNodes, parentNode = null) => {
             restIdentifier.push(id)
         }
     })
-
     // when newNodes dealed, delete oldNodes those no use
-    for(let i = curIndex; i < restNode.length; ++i){
+    for(let i = curIndex + 1; i < restNode.length; ++i){
         let oldNode = restNode[i]
         patches.push(makePatch('remove', oldNode))
     }
