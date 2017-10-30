@@ -14,7 +14,58 @@ export const renderToHtml = (json) => {
 
     return html
 }
-// 处理内联样式
+
+let flexLayoutStyle = [
+    'width', 
+    'height',
+    'padding', 
+    'padding-left',
+    'padding-right',
+    'padding-top',
+    'padding-bottom',
+    'margin-left', 
+    'margin-right', 
+    'margin-top', 
+    'margin-bottom', 
+    'margin', 
+    'flex-direction', 
+    'flex-wrap', 
+    'justify-content', 
+    'align-items', 
+    'align-content']
+
+let divStyle = [
+    'background-color',
+    'border-width',
+    'border-color',
+    'background-image'
+].concat(flexLayoutStyle)
+
+let imageStyle = [
+    'content-mode'
+].concat(divStyle)
+
+let spanStyle = [
+    'font-size',
+    'color',
+    'background-color',
+    'text-align',
+    'strikethrough'
+].concat(divStyle)
+
+let pStyle = [
+    'line-number'
+].concat(spanStyle)
+
+const defaultStyleObj = {
+    'div': divStyle,
+    'image': imageStyle,
+    'p': pStyle,
+    'span': spanStyle,
+    'a': pStyle,
+    'ul': divStyle
+}
+// 处理内联样式，主要是判断是不是在对应的标签属性集合内部
 const dealInlineStyle = (node) => {
     let attrs = node.attrs
     if(attrs.style){
@@ -25,12 +76,25 @@ const dealInlineStyle = (node) => {
             let itemStyle = item.trim().split(':')
             styleObj[itemStyle[0]] = itemStyle[1]
         })
-        console.log(Object.keys(styleObj))
+        // 获取内联样式的样式名称
+        Object.keys(styleObj).forEach((item) => {
+            if(defaultStyleObj[node.name].indexOf(item) < 0){
+                throw new Error(`${item}属性不支持哦！`)
+            }
+        })
+        
+        // let styleObjKeysSet = new Set([...styleObjKeys])
+        // // 获取对应标签上面的属性
+        // let elementStyleArr = defaultStyleObj[node.name]
+        // let divStyleSet = new Set([...elementStyleArr])
+
+        // // 两个数组求交集
+        // let intersect = new Set([...styleObjKeysSet].filter(x => divStyleSet.has(x)))
+        // console.log([...intersect])
     }
 }
 // 替换块级和内联标签
 const mapLabel = (node) => {
-    dealInlineStyle(node)
     const blockLabel = ['section', 'article', 'nav', 'header', 'aside', 'footer','h1', 'h2', 'h3']
     const inlineLabel = ['i', 'strong']
     // 块级元素和内联元素替换
@@ -39,6 +103,8 @@ const mapLabel = (node) => {
     } else if(inlineLabel.indexOf(node.name) > -1) {
         node.name = 'span'
     }
+    // 处理内联样式，检查是否是对应标签的样式
+    dealInlineStyle(node)
     return node
 }
 /**

@@ -138,6 +138,9 @@ export default class HtmlParser {
 
 let htmlStr = document.getElementsByTagName('body')[0].innerHTML.replace(/<\/?script[^>]*>/gi,"")
 let parser = new HtmlParser(htmlStr)
+
+console.log(document.styleSheets[0])
+//test(parser.elements)
 console.log(parser.elements)
 // let parser = new HtmlParser(`<div>
 // <p id="test" class="test1" style="width:100px;">aaaaaa</p>
