@@ -1,139 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script type="text/javascript">
-    ! function(a) {
-        function b() {
-            a.rem = f.getBoundingClientRect().width / 16, f.style.fontSize = a.rem + "px"
-        }
-        var c, d = a.navigator.appVersion.match(/iphone/gi) ? a.devicePixelRatio : 1,
-            e = 1 / d,
-            f = document.documentElement,
-            g = document.createElement("meta");
-        if (a.dpr = d, a.addEventListener("resize", function() {
-                clearTimeout(c), c = setTimeout(b, 300)
-            }, !1), a.addEventListener("pageshow", function(a) {
-                a.persisted && (clearTimeout(c), c = setTimeout(b, 300))
-            }, !1), f.setAttribute("data-dpr", d), g.setAttribute("name", "viewport"), g.setAttribute("content", "initial-scale=" + e + ", maximum-scale=" + e + ", minimum-scale=" + e + ", user-scalable=no"), f.firstElementChild) f.firstElementChild.appendChild(g);
-        else {
-            var h = document.createElement("div");
-            h.appendChild(g), document.write(h.innerHTML)
-        }
-        b();
-    }(window);
+        ! function (a) {
+            function b() {
+                a.rem = f.getBoundingClientRect().width / 16, f.style.fontSize = a.rem + "px"
+            }
+            var c, d = a.navigator.appVersion.match(/iphone/gi) ? a.devicePixelRatio : 1,
+                e = 1 / d,
+                f = document.documentElement,
+                g = document.createElement("meta");
+            if (a.dpr = d, a.addEventListener("resize", function () {
+                    clearTimeout(c), c = setTimeout(b, 300)
+                }, !1), a.addEventListener("pageshow", function (a) {
+                    a.persisted && (clearTimeout(c), c = setTimeout(b, 300))
+                }, !1), f.setAttribute("data-dpr", d), g.setAttribute("name", "viewport"), g.setAttribute("content",
+                    "initial-scale=" + e + ", maximum-scale=" + e + ", minimum-scale=" + e + ", user-scalable=no"), f.firstElementChild)
+                f.firstElementChild.appendChild(g);
+            else {
+                var h = document.createElement("div");
+                h.appendChild(g), document.write(h.innerHTML)
+            }
+            b();
+        }(window);
     </script>
     <title>开发环境</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        .content {
-            position: absolute;
-            width: 750px;
-            height: 970px;
-        }
-        .product {
-            position: absolute;
-            top: 8px;
-            left: 5px;
-        }
-        .product-img {
-            width: 740px;
-        }
-        .box {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        .box-img {
-            width: 750px;
-            height: 970px;
-        }
-        .container {
-            position: absolute;
-            top: 600px;
-            left: 10px;
-            width: 740px;
-            height: 400px;
-        }
-        .info {
-            position: absolute;
-            left: 15px;
-            top: 10px;
-            width: 450px;
-            height: 300px;
-        }
-        .avatar {
-            position: absolute;
-            top: 50px;
-            left: 15px;
-            width: 450px;
-        }
-        .avatar-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 25px;
-        }
-        .nick {
-            position: absolute;
-            left: 60px;
-            top: 5px;
-            font-size: 30px;
-        }
-        .info-desc {
-            font-size: 30px;
-            color: #ff4965;
-        }
-        .qcode {
-            position: absolute;
-            top: 40px;
-            right: 15px;
-        }
-        .qcode-desc {
-            position: absolute;
-            right: 15px;
-            top: 0;
-            font-size: 30px;
-        }
-        .qcode-img {
-            width: 240px;
-            height: 240px;
-        }
-    </style>
 </head>
-<body>
-    <div class="content">
-        <div class="product">
-            <img class="product-img" src="" alt="">
-        </div>
-        <section style="width: 20px; height: 40px; display:block;">
 
-        </section>
-        <ul>
-            <li></li>
-        </ul>
-        <i></i>
-        <h1></h1>
-        <div class="box">
-            <img class="box-img" src="" alt="">
-            <div class="container">
-                <div class="info">
-                    <p class="info-desc">快来跟我一起免费申请吧！</p>
-                    <div class="avatar">
-                        <img class="avatar-img" src="" alt="">
-                        <span class="nick">我是你爸爸</span>
-                    </div>
-                </div>
-                <span class="qcode-desc">扫描或长按二维码</span>
-                <div class="qcode">
-                    <img class="qcode-img" src="" alt="">
-                </div>
-            </div>
-        </div>
+<body>
+    <div class="header"></div>
+    <div class="content">
+        <div class="aside"></div>
     </div>
+    <div class="footer"></div>
 </body>
+
 </html>
