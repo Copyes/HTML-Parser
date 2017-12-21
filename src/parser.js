@@ -8,20 +8,19 @@ export default class HtmlParser {
 
     let parser = new Parser({
       onopentag(name, attrs) {
-        console.log(name)
         let vnode = self.createVNode(name, attrs)
         let parent = nodeTree.length ? nodeTree[nodeTree.length - 1] : null
-
+        // 是否存在嵌套的标签，
         if (parent) {
           vnode.parent = parent
           if (!parent.hasOwnProperty('children')) {
             parent.children = []
           }
           parent.children.push(vnode)
+        } else {
+          nodeTree.push(vnode)
+          elements.push(vnode)
         }
-
-        nodeTree.push(vnode)
-        elements.push(vnode)
       },
       onclosetag(name) {
         nodeTree.pop()
