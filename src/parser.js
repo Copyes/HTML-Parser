@@ -17,10 +17,9 @@ export default class HtmlParser {
             parent.children = []
           }
           parent.children.push(vnode)
-        } else {
-          nodeTree.push(vnode)
-          elements.push(vnode)
         }
+        nodeTree.push(vnode)
+        elements.push(vnode)
       },
       onclosetag(name) {
         nodeTree.pop()
@@ -36,7 +35,7 @@ export default class HtmlParser {
     parser.parseChunk(html)
     parser.done()
 
-    this.elements = elements
+    this.elements = elements.filter(node => !node.parent)
   }
 
   static get VNodePrototype() {
